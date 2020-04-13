@@ -1,12 +1,48 @@
+let countdown;
+const timerDisplay = document.querySelector('.display__time-left');
+const endTime = document.querySelector('.display__end-time');
+const button = document.querySelectorAll('[data-time]');
+
 function timer(seconds){
+    //clear any existing timers
+    clearInterval(countdown);
+    
     const now = Date.now();
     const then = now + seconds * 1000;
+    displayTimeLeft(seconds);
+    displayEndTime(then);
 
-    setInterval(() => {
+    countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         //check if we should stop it!
-        
+        if(secondsLeft <= 0){
+            clearInterval(countdown);
+            return;
+        }
         //display it
-        console.log(secondsLeft);
+        displayTimeLeft(secondsLeft);
     }, 1000);
 }
+
+function displayTimeLeft(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainderSeconds = seconds % 60;
+    const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${     
+    remainderSeconds}`;
+    documet.title = display;
+    timerDisplay.textContent = display;
+}
+
+function displayEndTime(timestamp){
+    const end = new Date(timestamp);
+    const hour = end.getHours();
+    const adjustedHour = hour > 12 ? hour - 12 : hour;
+    const minutes = end.getMinutes();
+    displayEndTime.textContent = `Be back At ${adjustedHour}:${minutes < 10 ? '0' : ''}${}`
+}
+
+function startTimer(){
+const seconds = parseInt(this.dataset.time)
+}
+buttons.forEach(button => button.addEventListener('click', startTimer))
+
